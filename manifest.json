@@ -1,0 +1,11 @@
+{
+    "display_name": "Chat Manager",
+    "loading_order": 5,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css",
+    "author": "YourName",
+    "version": "1.0.0",
+    "description": "管理当前角色的聊天记录，支持跨聊天搜索和快速跳转。"
+}
