@@ -1,0 +1,272 @@
+/* --- 核心容器 (防御性堡垒) --- */
+#chat-manager-modal {
+    display: none; /* JS控制显隐 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* 深色遮罩 */
+    backdrop-filter: blur(2px);
+    z-index: 9990;
+    font-family: sans-serif;
+}
+
+/* --- 对话框主体 (JS定位) --- */
+#chat-manager-modal .manager-dialog {
+    position: fixed; /* JS计算 top/left */
+    width: 900px;
+    max-width: 95vw;
+    height: 80vh;
+    background-color: #1a1a1a; /* 深灰背景 */
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: flex;
+    overflow: hidden;
+    color: #eee;
+}
+
+/* --- 侧边栏 --- */
+#chat-manager-modal .manager-sidebar {
+    width: 250px;
+    background-color: #111;
+    border-right: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s ease;
+}
+
+#chat-manager-modal .manager-sidebar.closed {
+    margin-left: -250px;
+}
+
+#chat-manager-modal .sidebar-header {
+    padding: 15px;
+    background-color: #000;
+    border-bottom: 1px solid #333;
+    font-weight: bold;
+    text-align: center;
+}
+
+#chat-manager-modal .sidebar-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+#chat-manager-modal .sidebar-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #222;
+    font-size: 0.9em;
+    color: #888;
+    transition: background 0.2s;
+}
+
+#chat-manager-modal .sidebar-item:hover {
+    background-color: #222;
+    color: #fff;
+}
+
+#chat-manager-modal .sidebar-item.active {
+    background-color: #333;
+    color: #fff;
+    border-left: 3px solid #fff;
+}
+
+/* --- 主区域 --- */
+#chat-manager-modal .manager-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* 防止flex子元素溢出 */
+}
+
+#chat-manager-modal .manager-header {
+    height: 60px;
+    padding: 0 20px;
+    background-color: #222;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+/* 头像开关 */
+#chat-manager-modal .avatar-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid #555;
+    transition: border-color 0.2s;
+}
+
+#chat-manager-modal .avatar-toggle:hover {
+    border-color: #fff;
+}
+
+/* 搜索容器 */
+#chat-manager-modal .search-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    position: relative;
+}
+
+/* 防御性 Input 样式 */
+#chat-manager-modal .manager-search-input {
+    width: 100% !important;
+    background-color: #111 !important;
+    color: #fff !important;
+    border: 1px solid #444 !important;
+    border-radius: 4px !important;
+    padding: 8px 35px 8px 10px !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    height: 36px !important;
+}
+
+#chat-manager-modal .manager-search-input:focus {
+    border-color: #888 !important;
+}
+
+#chat-manager-modal .search-icon {
+    position: absolute;
+    right: 10px;
+    color: #666;
+    pointer-events: none;
+}
+
+#chat-manager-modal .close-modal-x {
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #888;
+    padding: 5px;
+}
+#chat-manager-modal .close-modal-x:hover { color: #fff; }
+
+/* --- 结果列表 --- */
+#chat-manager-modal .results-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #1a1a1a;
+}
+
+#chat-manager-modal .message-card {
+    background-color: #252525;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#chat-manager-modal .message-meta {
+    font-size: 0.8em;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+}
+
+#chat-manager-modal .message-content {
+    font-size: 0.95em;
+    color: #ccc;
+    line-height: 1.5;
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+#chat-manager-modal .message-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+/* 按钮样式 */
+#chat-manager-modal .btn {
+    padding: 5px 12px !important;
+    border: 1px solid #444 !important;
+    background-color: #333 !important;
+    color: #eee !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    font-size: 0.85em !important;
+    transition: background 0.2s !important;
+}
+
+#chat-manager-modal .btn:hover {
+    background-color: #444 !important;
+}
+
+#chat-manager-modal .btn-primary {
+    background-color: #ddd !important;
+    color: #111 !important;
+    border: none !important;
+}
+#chat-manager-modal .btn-primary:hover {
+    background-color: #fff !important;
+}
+
+/* --- Loading 状态 --- */
+#chat-manager-modal .loading-spinner {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+}
+
+/* --- 预览子弹窗 (独立层级) --- */
+#chat-preview-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9995; /* 比主窗口高 */
+    background: rgba(0,0,0,0.4);
+}
+
+#chat-preview-modal .preview-dialog {
+    position: fixed; /* JS定位 */
+    background: #222;
+    border: 1px solid #555;
+    color: #eee;
+    width: 600px;
+    max-width: 90vw;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+
+#chat-preview-modal .preview-content {
+    max-height: 60vh;
+    overflow-y: auto;
+    margin: 15px 0;
+    white-space: pre-wrap;
+    font-size: 0.95em;
+    line-height: 1.6;
+    background: #111;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* --- 自定义滚动条 --- */
+#chat-manager-modal ::-webkit-scrollbar { width: 8px; }
+#chat-manager-modal ::-webkit-scrollbar-track { background: #111; }
+#chat-manager-modal ::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+#chat-manager-modal ::-webkit-scrollbar-thumb:hover { background: #555; }
